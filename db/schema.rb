@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120719034734) do
 
   create_table "statistics", :force => true do |t|
     t.string   "statistic_type"
-    t.text     "statistic_value", :limit => 255
+    t.text     "statistic_value", :limit => nil
     t.integer  "user_id"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
