@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20120719034734) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.string   "status",     :default => "building"
-    t.string   "photo_url", :limit => 255
+    t.string   "photo_url"
   end
 
 end
