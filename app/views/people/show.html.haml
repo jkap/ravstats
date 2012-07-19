@@ -10,7 +10,7 @@
       %p
         = @user.username
         has knitted
-        %strong= "#{@total_yards.round(2)} yards!"
+        %strong= "#{@total_yards.to_f.round(2)} yards!"
         That's over
         %strong
           = (@total_yards.to_f / 100).to_i
