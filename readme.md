@@ -13,10 +13,8 @@ foreman start
 ## Current drawbacks
 * Collecting stats for a user with lots of projects takes a looooong
   time
-* Makes way too many API calls
 
 ## Wishful thinking
-* Condense API calls (redis to cache results? Iunno)
 * Better UI
 * More stats!
 
