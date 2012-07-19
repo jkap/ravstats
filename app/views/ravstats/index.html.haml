@@ -1,0 +1,14 @@
+.row
+  .span12
+    .hero-unit
+      %h1 RavStats!
+      %p Neat statistics about your Ravelry projects!
+      %p
+        - if @logged_in
+          = form_for User.new, url: people_path, method: :post, html: { class: 'form-search' } do |f|
+            = f.text_field :username, class: 'search-query', placeholder: 'Username'
+            = f.submit "Get stats!", class: 'btn btn-primary'
+        - else
+          = link_to "Sign in with Ravelry", ravelry_auth_path, class: 'btn btn-primary btn-large'
+      %p
+        = link_to "What's all this then?", about_path, class: 'btn btn-large'

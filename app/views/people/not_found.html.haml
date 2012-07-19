@@ -1,0 +1,8 @@
+.row
+  .span12
+    %h1 Oops! That doesn't appear to be a real user.
+    %h2 Wanna try again?
+    %p
+      = form_for User.new, url: people_path, method: :post, html: { class: 'form-search' } do |f|
+        = f.text_field :username, class: 'search-query', placeholder: 'Username'
+        = f.submit "Get stats!", class: 'btn btn-primary'

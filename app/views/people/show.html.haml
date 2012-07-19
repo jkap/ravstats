@@ -1,0 +1,32 @@
+.row
+  .span3{style: 'text-align: right;'}
+    = image_tag @user.photo_url
+  .span6
+    .page-header
+      %h1
+        Stats for
+        = link_to @user.username, "https://ravelry.com/people/#{@user.username}"
+    - if @total_yards.present?
+      %p
+        = @user.username
+        has knitted
+        %strong= "#{@total_yards} yards!"
+        That's over
+        %strong
+          = (@total_yards.to_f / 100).to_i
+          football fields!
+    - if @most_common_pattern_types.present?
+      %h2 Top 5 Favorite Pattern Types:
+      %ol
+        - @most_common_pattern_types[0..4].each do |type|
+          %li="#{type[0]} (#{type[1]})"
+    - if @favorite_brands.present?
+      %h2 Top 5 Favorite Yarn Companies:
+      %ol
+        - @favorite_brands[0..4].each do |brand|
+          %li="#{brand[0]} (#{brand[1]})"
+    - if @favorite_weight.present?
+      %h2 Top 5 Favorite Yarn Weights:
+      %ol
+        - @favorite_weight[0..4].each do |weight|
+          %li="#{weight[0]} (#{weight[1]})"

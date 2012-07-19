@@ -1,0 +1,20 @@
+.row
+  .span3{style: 'text-align: right;'}
+    = image_tag @user.photo_url
+  .span6
+    .page-header
+      %h1 We're working on it
+    %p
+      Statistics for
+      = @user.username
+      are still being calculated.
+    %p This page will refresh automatically once done calculating.
+    :javascript
+      (function() {
+        $.getJSON(document.URL+'/status.json', function(data) {
+          if(data.status == "done") {
+            window.location.reload();
+          }
+        });
+        setTimeout(arguments.callee, 5000);
+      })();

@@ -1,0 +1,12 @@
+defaults: &defaults
+  ravelry_consumer_key: 20B655A0F8746687B688
+  ravelry_consumer_secret: LMjPZ2WKISlnabEkzPPBFYw3uHPtgFpBGyG9ilID
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
