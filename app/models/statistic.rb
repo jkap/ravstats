@@ -1,3 +1,9 @@
+module JSON
+  def self.parse_nil(json)
+    JSON.parse(json) if json && json.length >= 2
+  end
+end
+
 class Statistic < ActiveRecord::Base
   attr_accessible :statistic_type, :statistic_value, :user
   belongs_to :user
@@ -5,10 +11,10 @@ class Statistic < ActiveRecord::Base
   def self.get_total_length_for_user(user, access_token)
     @total_yards_stat = user.statistics.find_by_statistic_type("total_yards")
     if @total_yards_stat.nil? || Time.now - 1.day > @total_yards_stat.updated_at
-      projects_json = JSON.parse(access_token.get("/projects/#{user.username}/list.json").body)
+      projects_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/list.json").body)
       total_yards = 0
       projects_json["projects"].each do |project|
-        project_json = JSON.parse(access_token.get("/projects/#{user.username}/#{project['id']}.json").body)
+        project_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/#{project['id']}.json").body)
         project_json["project"]["packs"].each do |pack|
           total_yards += pack["total_yards"] unless pack["total_yards"].nil?
         end
@@ -25,16 +31,18 @@ class Statistic < ActiveRecord::Base
   def self.get_most_common_pattern_type_for_user(user, access_token)
     @statistic = user.statistics.find_by_statistic_type("most_common_pattern_types")
     if @statistic.nil? || Time.now - 1.day > @statistic.updated_at
-      projects_json = JSON.parse(access_token.get("/projects/#{user.username}/list.json").body)
+      projects_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/list.json").body)
       types = {}
       projects_json["projects"].each do |project|
         unless project['pattern_id'].nil?
-          pattern_json = JSON.parse(access_token.get("/patterns/#{project['pattern_id']}.json").body)
-          type = pattern_json["pattern"]["pattern_type"]["name"]
-          if types[type].nil?
-            types[type] = 1
-          else
-            types[type] += 1
+          pattern_json = JSON.parse_nil(access_token.get("/patterns/#{project['pattern_id']}.json").body)
+          unless pattern_json.nil?
+            type = pattern_json["pattern"]["pattern_type"]["name"]
+            if types[type].nil?
+              types[type] = 1
+            else
+              types[type] += 1
+            end
           end
         end
       end
@@ -51,7 +59,7 @@ class Statistic < ActiveRecord::Base
   def self.get_favorite_brands(user, access_token)
     @statistic = user.statistics.find_by_statistic_type("favorite_brands")
     if @statistic.nil? || Time.now - 1.day > @statistic.updated_at
-      projects_json = JSON.parse(access_token.get("/projects/#{user.username}/list.json").body)
+      projects_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/list.json").body)
       brands = {}
       projects_json["projects"].each do |project|
         project_json = JSON.parse(access_token.get("/projects/#{user.username}/#{project['id']}.json").body)
@@ -79,10 +87,10 @@ class Statistic < ActiveRecord::Base
   def self.get_favorite_weight(user, access_token)
     @statistic = user.statistics.find_by_statistic_type("favorite_weight")
     if @statistic.nil? || Time.now - 1.day > @statistic.updated_at
-      projects_json = JSON.parse(access_token.get("/projects/#{user.username}/list.json").body)
+      projects_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/list.json").body)
       weights = {}
       projects_json["projects"].each do |project|
-        project_json = JSON.parse(access_token.get("/projects/#{user.username}/#{project['id']}.json").body)
+        project_json = JSON.parse_nil(access_token.get("/projects/#{user.username}/#{project['id']}.json").body)
         project_json["project"]["packs"].each do |pack|
           unless pack["yarn_weight"].nil?
             weight = pack["yarn_weight"]["name"]
