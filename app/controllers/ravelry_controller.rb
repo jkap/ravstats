@@ -1,8 +1,8 @@
 class RavelryController < ApplicationController
 
   def auth
-    consumer = OAuth::Consumer.new APP_CONFIG['ravelry_consumer_key'],
-                                    APP_CONFIG['ravelry_consumer_secret'],
+    consumer = OAuth::Consumer.new ENV['ravelry_consumer_key'],
+                                    ENV['ravelry_consumer_secret'],
                                     { site: 'https://api.ravelry.com' }
     request_token = consumer.get_request_token oauth_callback: ravelry_callback_url
     session[:request_token] = request_token

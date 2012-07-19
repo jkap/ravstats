@@ -11,8 +11,8 @@ class AccessToken < ActiveRecord::Base
 
   def self.usable_token
     token = self.last
-    consumer = OAuth::Consumer.new APP_CONFIG['ravelry_consumer_key'],
-                                    APP_CONFIG['ravelry_consumer_secret'],
+    consumer = OAuth::Consumer.new ENV['ravelry_consumer_key'],
+                                    ENV['ravelry_consumer_secret'],
                                     { site: 'https://api.ravelry.com' }
     access_token = OAuth::AccessToken.new(consumer, token.token, token.secret) 
   end

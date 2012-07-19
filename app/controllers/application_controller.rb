@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   def access_token
     token = AccessToken.find(session[:access_token_id])
-    consumer = OAuth::Consumer.new APP_CONFIG['ravelry_consumer_key'],
-                                    APP_CONFIG['ravelry_consumer_secret'],
+    consumer = OAuth::Consumer.new ENV['ravelry_consumer_key'],
+                                    ENV['ravelry_consumer_secret'],
                                     { site: 'https://api.ravelry.com' }
     access_token = OAuth::AccessToken.new(consumer, token.token, token.secret)
   end
