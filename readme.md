@@ -1,5 +1,4 @@
 # RavStats!
-## Statistics for your knitting!
 
 ## What it do
 RavStats is a statistics generator for your Ravelry profile. It was done
