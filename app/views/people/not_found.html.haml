@@ -6,3 +6,4 @@
       = form_for User.new, url: people_path, method: :post, html: { class: 'form-search' } do |f|
         = f.text_field :username, class: 'search-query', placeholder: 'Username'
         = f.submit "Get stats!", class: 'btn btn-primary'
+- set_title("Not found")

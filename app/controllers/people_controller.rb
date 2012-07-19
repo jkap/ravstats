@@ -6,7 +6,8 @@ class PeopleController < ApplicationController
     username = params[:id]
     @user = User.find_by_username(username)
     if @user.nil?
-      build_user(username) and return
+      build_user(username)
+      render 'pending' and return
     elsif @user.pending?
       @user.delay.build_stats! access_token
       render 'pending' and return
@@ -31,7 +32,11 @@ class PeopleController < ApplicationController
     if @user
       redirect_to person_path(username)
     else
-      build_user(username)
+      if build_user(username)
+        redirect_to person_path(username)
+      else
+        render 'not_found'
+      end
     end
   end
 
@@ -44,9 +49,10 @@ class PeopleController < ApplicationController
       photo_url = JSON.parse(response.body)["user"]["photo_url"]
       @user = User.create!(username: username, photo_url: photo_url)
       @user.delay.build_stats! token
-      redirect_to person_path(username) and return
+      @user
+      #redirect_to person_path(username) and return
     else
-      render 'not_found' and return
+      false
     end
   end
 end

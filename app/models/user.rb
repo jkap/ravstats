@@ -13,10 +13,11 @@ class User < ActiveRecord::Base
       self.status = "building"
       save!
     end
-    Statistic.get_total_length_for_user(self, access_token)
-    Statistic.get_most_common_pattern_type_for_user(self, access_token)
-    Statistic.get_favorite_brands(self, access_token)
-    Statistic.get_favorite_weight(self, access_token)
+    # Statistic.get_total_length_for_user(self, access_token)
+    # Statistic.get_most_common_pattern_type_for_user(self, access_token)
+    # Statistic.get_favorite_brands(self, access_token)
+    # Statistic.get_favorite_weight(self, access_token)
+    Statistic.build_stats(self, access_token)
     self.status = "done"
     save!
   end
