@@ -31,14 +31,13 @@ gem 'bootstrap-sass'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
-gem 'thin'
 gem 'haml-rails'
 gem 'delayed_job_active_record'
 gem "bootstrap_active_nav"
